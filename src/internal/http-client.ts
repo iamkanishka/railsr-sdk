@@ -12,13 +12,20 @@
  *   - Structured error mapping (RailsrError)
  */
 
-import { CircuitBreaker, type CircuitBreakerOptions } from "./circuit-breaker.js";
+import {
+  CircuitBreaker,
+  type CircuitBreakerOptions,
+} from "./circuit-breaker.js";
 import { RateLimiter } from "./rate-limiter.js";
 import { withRetry, type RetryOptions } from "./retry.js";
 import { TokenManager } from "./token-manager.js";
 import { generateIdempotencyKey } from "./idempotency.js";
 import { noopHook, type TelemetryHook } from "./telemetry.js";
-import { RailsrError, classifyStatus, isRetryableStatus } from "../types/errors.js";
+import {
+  RailsrError,
+  classifyStatus,
+  isRetryableStatus,
+} from "../types/errors.js";
 import type { Environment } from "../types/index.js";
 
 const BASE_URLS: Record<Environment, string> = {
@@ -104,13 +111,21 @@ export class HttpClient {
   ): Promise<T> {
     const signal = mergeSignals(this.clientSignal, reqOpts.signal);
 
-    const idemKey =
-      MUTATING_METHODS.has(method.toUpperCase())
-        ? (reqOpts.idempotencyKey ?? generateIdempotencyKey())
-        : undefined;
+    const idemKey = MUTATING_METHODS.has(method.toUpperCase())
+      ? (reqOpts.idempotencyKey ?? generateIdempotencyKey())
+      : undefined;
 
     return withRetry(
-      async (attempt) => this.attempt<T>(method, path, body, reqOpts.query, idemKey, attempt, signal),
+      async (attempt) =>
+        this.attempt<T>(
+          method,
+          path,
+          body,
+          reqOpts.query,
+          idemKey,
+          attempt,
+          signal,
+        ),
       this.retryOpts,
       signal,
     );
@@ -139,7 +154,10 @@ export class HttpClient {
       token = await this.tokens.token(signal);
     } catch (err) {
       if (err instanceof RailsrError) throw err;
-      throw RailsrError.network(`Failed to obtain access token: ${String(err)}`, err);
+      throw RailsrError.network(
+        `Failed to obtain access token: ${String(err)}`,
+        err,
+      );
     }
 
     // 4. Build URL
@@ -161,7 +179,9 @@ export class HttpClient {
     const init: RequestInit = {
       method: method.toUpperCase(),
       headers,
-      ...(body !== null && body !== undefined ? { body: JSON.stringify(body) } : {}),
+      ...(body !== null && body !== undefined
+        ? { body: JSON.stringify(body) }
+        : {}),
       ...(signal !== undefined ? { signal } : {}),
     };
 
@@ -174,7 +194,13 @@ export class HttpClient {
       const duration = Date.now() - start;
       const apiErr = RailsrError.network(String(err), err);
       this.cb.recordFailure();
-      await this.hook({ method, path, durationMs: duration, attempt, error: apiErr });
+      await this.hook({
+        method,
+        path,
+        durationMs: duration,
+        attempt,
+        error: apiErr,
+      });
       throw apiErr;
     }
 
@@ -183,7 +209,13 @@ export class HttpClient {
 
     if (statusCode >= 200 && statusCode <= 299) {
       this.cb.recordSuccess();
-      await this.hook({ method, path, statusCode, durationMs: duration, attempt });
+      await this.hook({
+        method,
+        path,
+        statusCode,
+        durationMs: duration,
+        attempt,
+      });
       return decodeBody<T>(resp);
     }
 
@@ -194,7 +226,14 @@ export class HttpClient {
       this.cb.recordFailure();
     }
 
-    await this.hook({ method, path, statusCode, durationMs: duration, attempt, error: apiErr });
+    await this.hook({
+      method,
+      path,
+      statusCode,
+      durationMs: duration,
+      attempt,
+      error: apiErr,
+    });
     throw apiErr;
   }
 
@@ -210,7 +249,9 @@ export class HttpClient {
       // non-JSON error body
     }
 
-    const message = extractString(decoded, ["message", "error_message", "error"]) ?? "Unknown error";
+    const message =
+      extractString(decoded, ["message", "error_message", "error"]) ??
+      "Unknown error";
     const code = extractString(decoded, ["error_code", "code"]) ?? "";
     const requestId = resp.headers.get("X-Request-Id") ?? "";
 
@@ -281,7 +322,9 @@ function extractString(
 }
 
 /** Combine multiple AbortSignals into one (any abort propagates). */
-function mergeSignals(...signals: (AbortSignal | undefined)[]): AbortSignal | undefined {
+function mergeSignals(
+  ...signals: (AbortSignal | undefined)[]
+): AbortSignal | undefined {
   const active = signals.filter(Boolean) as AbortSignal[];
   if (active.length === 0) return undefined;
   if (active.length === 1) return active[0];
@@ -291,7 +334,9 @@ function mergeSignals(...signals: (AbortSignal | undefined)[]): AbortSignal | un
       controller.abort(s.reason);
       break;
     }
-    s.addEventListener("abort", () => controller.abort(s.reason), { once: true });
+    s.addEventListener("abort", () => controller.abort(s.reason), {
+      once: true,
+    });
   }
   return controller.signal;
 }

@@ -6,7 +6,11 @@
 
 import { createHmac, timingSafeEqual } from "crypto";
 import type { HttpClient, RequestOptions } from "../internal/http-client.js";
-import type { WebhookConfig, WebhookEvent, PaginationParams } from "../types/index.js";
+import type {
+  WebhookConfig,
+  WebhookEvent,
+  PaginationParams,
+} from "../types/index.js";
 import { RailsrError } from "../types/errors.js";
 import { buildPaginationQuery } from "./endusers.js";
 
@@ -75,7 +79,10 @@ export class WebhooksService {
       "GET",
       "/v1/customer/notifications/history",
       undefined,
-      { ...opts, query: buildPaginationQuery(params as Record<string, unknown>) },
+      {
+        ...opts,
+        query: buildPaginationQuery(params as Record<string, unknown>),
+      },
     );
   }
 
@@ -83,7 +90,10 @@ export class WebhooksService {
    * Re-deliver a specific notification.
    * POST /v1/customer/notifications/:id/retry
    */
-  async retry(notificationID: string, opts?: RequestOptions): Promise<WebhookEvent> {
+  async retry(
+    notificationID: string,
+    opts?: RequestOptions,
+  ): Promise<WebhookEvent> {
     return this.http.request<WebhookEvent>(
       "POST",
       `/v1/customer/notifications/${notificationID}/retry`,

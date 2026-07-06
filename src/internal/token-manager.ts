@@ -38,8 +38,7 @@ export class TokenManager {
 
   private isFresh(): boolean {
     if (!this.cached) return false;
-    const expiresAtMs =
-      this.cached.fetched_at + this.cached.expires_in * 1000;
+    const expiresAtMs = this.cached.fetched_at + this.cached.expires_in * 1000;
     return Date.now() < expiresAtMs - REFRESH_BUFFER_MS;
   }
 

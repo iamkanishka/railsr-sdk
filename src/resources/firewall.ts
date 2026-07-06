@@ -4,7 +4,11 @@
  */
 
 import type { HttpClient, RequestOptions } from "../internal/http-client.js";
-import type { FirewallRule, FirewallRules, FirewallDataset } from "../types/index.js";
+import type {
+  FirewallRule,
+  FirewallRules,
+  FirewallDataset,
+} from "../types/index.js";
 
 // ── Request param types ────────────────────────────────────────────────────────
 
@@ -34,7 +38,10 @@ export class FirewallService {
    * Create or replace the customer's firewall rule-set (atomic swap).
    * POST /v1/customer/firewall
    */
-  async setRules(params: SetRulesParams, opts?: RequestOptions): Promise<FirewallRules> {
+  async setRules(
+    params: SetRulesParams,
+    opts?: RequestOptions,
+  ): Promise<FirewallRules> {
     return this.http.request<FirewallRules>(
       "POST",
       "/v1/customer/firewall",

@@ -29,7 +29,10 @@ export class CustomerService {
    * Update customer metadata.
    * PUT /v1/customer
    */
-  async update(params: UpdateCustomerParams, opts?: RequestOptions): Promise<Customer> {
+  async update(
+    params: UpdateCustomerParams,
+    opts?: RequestOptions,
+  ): Promise<Customer> {
     return this.http.request<Customer>("PUT", "/v1/customer", params, opts);
   }
 
@@ -38,6 +41,11 @@ export class CustomerService {
    * GET /v1/customer/products
    */
   async listProducts(opts?: RequestOptions): Promise<string[]> {
-    return this.http.request<string[]>("GET", "/v1/customer/products", undefined, opts);
+    return this.http.request<string[]>(
+      "GET",
+      "/v1/customer/products",
+      undefined,
+      opts,
+    );
   }
 }

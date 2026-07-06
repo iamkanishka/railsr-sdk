@@ -124,7 +124,8 @@ export class Railsr {
 
   constructor(opts: RailsrOptions) {
     if (!opts.clientId) throw new Error("railsr-sdk: clientId is required");
-    if (!opts.clientSecret) throw new Error("railsr-sdk: clientSecret is required");
+    if (!opts.clientSecret)
+      throw new Error("railsr-sdk: clientSecret is required");
 
     const httpOpts: HttpClientOptions = {
       clientId: opts.clientId,
@@ -133,8 +134,12 @@ export class Railsr {
       ...(opts.userAgent !== undefined ? { userAgent: opts.userAgent } : {}),
       ...(opts.signal !== undefined ? { signal: opts.signal } : {}),
       ...(opts.retry !== undefined ? { retry: opts.retry } : {}),
-      ...(opts.circuitBreaker !== undefined ? { circuitBreaker: opts.circuitBreaker } : {}),
-      ...(opts.rateLimitRps !== undefined ? { rateLimitRps: opts.rateLimitRps } : {}),
+      ...(opts.circuitBreaker !== undefined
+        ? { circuitBreaker: opts.circuitBreaker }
+        : {}),
+      ...(opts.rateLimitRps !== undefined
+        ? { rateLimitRps: opts.rateLimitRps }
+        : {}),
       ...(opts.onRequest !== undefined ? { onRequest: opts.onRequest } : {}),
       ...(opts.fetchFn !== undefined ? { fetchFn: opts.fetchFn } : {}),
     };

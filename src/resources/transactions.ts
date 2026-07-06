@@ -4,7 +4,11 @@
  */
 
 import type { HttpClient, RequestOptions } from "../internal/http-client.js";
-import type { Transaction, PaginationParams, PaymentType } from "../types/index.js";
+import type {
+  Transaction,
+  PaginationParams,
+  PaymentType,
+} from "../types/index.js";
 import { RailsrError } from "../types/errors.js";
 import { buildPaginationQuery, sleep } from "./endusers.js";
 
@@ -70,7 +74,10 @@ export class TransactionsService {
    * Create an outbound payment to a beneficiary.
    * POST /v1/customer/transactions
    */
-  async sendMoney(params: SendMoneyParams, opts?: RequestOptions): Promise<Transaction> {
+  async sendMoney(
+    params: SendMoneyParams,
+    opts?: RequestOptions,
+  ): Promise<Transaction> {
     return this.http.request<Transaction>(
       "POST",
       "/v1/customer/transactions",
@@ -83,7 +90,10 @@ export class TransactionsService {
    * Transfer funds between two Railsr ledgers.
    * POST /v1/customer/transactions/inter-ledger
    */
-  async interLedger(params: InterLedgerParams, opts?: RequestOptions): Promise<Transaction> {
+  async interLedger(
+    params: InterLedgerParams,
+    opts?: RequestOptions,
+  ): Promise<Transaction> {
     return this.http.request<Transaction>(
       "POST",
       "/v1/customer/transactions/inter-ledger",
@@ -111,7 +121,10 @@ export class TransactionsService {
    * Retrieve a transaction by ID.
    * GET /v1/customer/transactions/:id
    */
-  async get(transactionID: string, opts?: RequestOptions): Promise<Transaction> {
+  async get(
+    transactionID: string,
+    opts?: RequestOptions,
+  ): Promise<Transaction> {
     return this.http.request<Transaction>(
       "GET",
       `/v1/customer/transactions/${transactionID}`,
@@ -124,7 +137,10 @@ export class TransactionsService {
    * List transactions across all ledgers or scoped to one ledger.
    * GET /v1/customer/transactions  or  GET /v1/customer/ledgers/:id/transactions
    */
-  async list(params?: ListTransactionsParams, opts?: RequestOptions): Promise<Transaction[]> {
+  async list(
+    params?: ListTransactionsParams,
+    opts?: RequestOptions,
+  ): Promise<Transaction[]> {
     const { ledger_id, ...rest } = params ?? {};
     const path = ledger_id
       ? `/v1/customer/ledgers/${ledger_id}/transactions`
@@ -164,8 +180,15 @@ export class TransactionsService {
   /**
    * Approve a quarantined transaction.
    */
-  async approve(transactionID: string, opts?: RequestOptions): Promise<Transaction> {
-    return this.resolveQuarantine(transactionID, { resolution: "approve" }, opts);
+  async approve(
+    transactionID: string,
+    opts?: RequestOptions,
+  ): Promise<Transaction> {
+    return this.resolveQuarantine(
+      transactionID,
+      { resolution: "approve" },
+      opts,
+    );
   }
 
   /**
@@ -189,7 +212,10 @@ export class TransactionsService {
    * Retry a failed transaction.
    * POST /v1/customer/transactions/:id/retry
    */
-  async retry(transactionID: string, opts?: RequestOptions): Promise<Transaction> {
+  async retry(
+    transactionID: string,
+    opts?: RequestOptions,
+  ): Promise<Transaction> {
     return this.http.request<Transaction>(
       "POST",
       `/v1/customer/transactions/${transactionID}/retry`,

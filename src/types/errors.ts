@@ -86,44 +86,107 @@ export class RailsrError extends Error {
 
   // ── Sentinel factories ─────────────────────────────────────────────────────
 
-  static unauthorized(message = "Unauthorized", opts?: Partial<RailsrErrorOptions>): RailsrError {
-    return new RailsrError({ ...opts, type: "unauthorized", message, statusCode: 401 });
+  static unauthorized(
+    message = "Unauthorized",
+    opts?: Partial<RailsrErrorOptions>,
+  ): RailsrError {
+    return new RailsrError({
+      ...opts,
+      type: "unauthorized",
+      message,
+      statusCode: 401,
+    });
   }
 
-  static forbidden(message = "Forbidden", opts?: Partial<RailsrErrorOptions>): RailsrError {
-    return new RailsrError({ ...opts, type: "forbidden", message, statusCode: 403 });
+  static forbidden(
+    message = "Forbidden",
+    opts?: Partial<RailsrErrorOptions>,
+  ): RailsrError {
+    return new RailsrError({
+      ...opts,
+      type: "forbidden",
+      message,
+      statusCode: 403,
+    });
   }
 
-  static notFound(message = "Not found", opts?: Partial<RailsrErrorOptions>): RailsrError {
-    return new RailsrError({ ...opts, type: "not_found", message, statusCode: 404 });
+  static notFound(
+    message = "Not found",
+    opts?: Partial<RailsrErrorOptions>,
+  ): RailsrError {
+    return new RailsrError({
+      ...opts,
+      type: "not_found",
+      message,
+      statusCode: 404,
+    });
   }
 
-  static conflict(message = "Conflict", opts?: Partial<RailsrErrorOptions>): RailsrError {
-    return new RailsrError({ ...opts, type: "conflict", message, statusCode: 409 });
+  static conflict(
+    message = "Conflict",
+    opts?: Partial<RailsrErrorOptions>,
+  ): RailsrError {
+    return new RailsrError({
+      ...opts,
+      type: "conflict",
+      message,
+      statusCode: 409,
+    });
   }
 
-  static unprocessable(message = "Unprocessable entity", opts?: Partial<RailsrErrorOptions>): RailsrError {
-    return new RailsrError({ ...opts, type: "unprocessable", message, statusCode: 422 });
+  static unprocessable(
+    message = "Unprocessable entity",
+    opts?: Partial<RailsrErrorOptions>,
+  ): RailsrError {
+    return new RailsrError({
+      ...opts,
+      type: "unprocessable",
+      message,
+      statusCode: 422,
+    });
   }
 
-  static rateLimited(message = "Rate limited", opts?: Partial<RailsrErrorOptions>): RailsrError {
-    return new RailsrError({ ...opts, type: "rate_limited", message, statusCode: 429, retryable: true });
+  static rateLimited(
+    message = "Rate limited",
+    opts?: Partial<RailsrErrorOptions>,
+  ): RailsrError {
+    return new RailsrError({
+      ...opts,
+      type: "rate_limited",
+      message,
+      statusCode: 429,
+      retryable: true,
+    });
   }
 
-  static serverError(message = "Internal server error", opts?: Partial<RailsrErrorOptions>): RailsrError {
-    return new RailsrError({ ...opts, type: "server_error", message, retryable: true });
+  static serverError(
+    message = "Internal server error",
+    opts?: Partial<RailsrErrorOptions>,
+  ): RailsrError {
+    return new RailsrError({
+      ...opts,
+      type: "server_error",
+      message,
+      retryable: true,
+    });
   }
 
   static circuitOpen(): RailsrError {
     return new RailsrError({
       type: "circuit_open",
-      message: "Circuit breaker is open; too many recent failures. Try again shortly.",
+      message:
+        "Circuit breaker is open; too many recent failures. Try again shortly.",
       retryable: true,
     });
   }
 
   static network(message: string, cause?: unknown): RailsrError {
-    return new RailsrError({ type: "network", message, retryable: true, cause });
+    return new RailsrError({
+      type: "network",
+      message,
+      retryable: true,
+      cause,
+    });
   }
 
   static invalidSignature(): RailsrError {
@@ -141,8 +204,13 @@ export class RailsrError extends Error {
 // ── Helper utilities ──────────────────────────────────────────────────────────
 
 /** True if `err` is a RailsrError of the given type. */
-export function isRailsrError(err: unknown, type?: ErrorType): err is RailsrError {
-  return err instanceof RailsrError && (type === undefined || err.type === type);
+export function isRailsrError(
+  err: unknown,
+  type?: ErrorType,
+): err is RailsrError {
+  return (
+    err instanceof RailsrError && (type === undefined || err.type === type)
+  );
 }
 
 /** Map an HTTP status code to an ErrorType. */

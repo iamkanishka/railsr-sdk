@@ -4,7 +4,13 @@
  */
 
 import type { HttpClient, RequestOptions } from "../internal/http-client.js";
-import type { Enduser, KYCCheck, Person, Company, PaginationParams } from "../types/index.js";
+import type {
+  Enduser,
+  KYCCheck,
+  Person,
+  Company,
+  PaginationParams,
+} from "../types/index.js";
 import { RailsrError } from "../types/errors.js";
 
 // ── Request param types ────────────────────────────────────────────────────────
@@ -62,7 +68,12 @@ export class EndusersService {
    * GET /v2/endusers/:id
    */
   async get(enduserID: string, opts?: RequestOptions): Promise<Enduser> {
-    return this.http.request<Enduser>("GET", `/v2/endusers/${enduserID}`, undefined, opts);
+    return this.http.request<Enduser>(
+      "GET",
+      `/v2/endusers/${enduserID}`,
+      undefined,
+      opts,
+    );
   }
 
   /**
@@ -88,7 +99,12 @@ export class EndusersService {
     params: UpdateEnduserParams,
     opts?: RequestOptions,
   ): Promise<Enduser> {
-    return this.http.request<Enduser>("PUT", `/v2/endusers/${enduserID}`, params, opts);
+    return this.http.request<Enduser>(
+      "PUT",
+      `/v2/endusers/${enduserID}`,
+      params,
+      opts,
+    );
   }
 
   /**
@@ -100,7 +116,12 @@ export class EndusersService {
     params: PatchEnduserParams,
     opts?: RequestOptions,
   ): Promise<Enduser> {
-    return this.http.request<Enduser>("PATCH", `/v2/endusers/${enduserID}`, params, opts);
+    return this.http.request<Enduser>(
+      "PATCH",
+      `/v2/endusers/${enduserID}`,
+      params,
+      opts,
+    );
   }
 
   // ── KYC ─────────────────────────────────────────────────────────────────────
@@ -198,7 +219,9 @@ export class EndusersService {
     } = opts;
 
     if (targetStatuses.length === 0) {
-      throw RailsrError.validation("waitForStatus requires at least one targetStatus");
+      throw RailsrError.validation(
+        "waitForStatus requires at least one targetStatus",
+      );
     }
 
     const targetSet = new Set(targetStatuses);

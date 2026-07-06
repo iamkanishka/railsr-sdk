@@ -61,7 +61,10 @@ export class BeneficiariesService {
    * Retrieve a beneficiary by ID.
    * GET /v1/customer/beneficiaries/:id
    */
-  async get(beneficiaryID: string, opts?: RequestOptions): Promise<Beneficiary> {
+  async get(
+    beneficiaryID: string,
+    opts?: RequestOptions,
+  ): Promise<Beneficiary> {
     return this.http.request<Beneficiary>(
       "GET",
       `/v1/customer/beneficiaries/${beneficiaryID}`,
@@ -82,7 +85,10 @@ export class BeneficiariesService {
       "GET",
       "/v1/customer/beneficiaries",
       undefined,
-      { ...opts, query: buildPaginationQuery(params as Record<string, unknown>) },
+      {
+        ...opts,
+        query: buildPaginationQuery(params as Record<string, unknown>),
+      },
     );
   }
 

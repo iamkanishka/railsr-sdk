@@ -86,7 +86,12 @@ export class CardsService {
    * GET /v1/customer/cards/:id
    */
   async get(cardID: string, opts?: RequestOptions): Promise<Card> {
-    return this.http.request<Card>("GET", `/v1/customer/cards/${cardID}`, undefined, opts);
+    return this.http.request<Card>(
+      "GET",
+      `/v1/customer/cards/${cardID}`,
+      undefined,
+      opts,
+    );
   }
 
   /**
@@ -204,7 +209,10 @@ export class CardsService {
       "GET",
       `/v1/customer/cards/${cardID}/transactions`,
       undefined,
-      { ...opts, query: buildPaginationQuery(params as Record<string, unknown>) },
+      {
+        ...opts,
+        query: buildPaginationQuery(params as Record<string, unknown>),
+      },
     );
   }
 

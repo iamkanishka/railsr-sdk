@@ -64,8 +64,16 @@ export class LedgersService {
    * Create a new ledger.
    * POST /v1/customer/ledgers
    */
-  async create(params: CreateLedgerParams, opts?: RequestOptions): Promise<Ledger> {
-    return this.http.request<Ledger>("POST", "/v1/customer/ledgers", params, opts);
+  async create(
+    params: CreateLedgerParams,
+    opts?: RequestOptions,
+  ): Promise<Ledger> {
+    return this.http.request<Ledger>(
+      "POST",
+      "/v1/customer/ledgers",
+      params,
+      opts,
+    );
   }
 
   /**
@@ -73,18 +81,31 @@ export class LedgersService {
    * GET /v1/customer/ledgers/:id
    */
   async get(ledgerID: string, opts?: RequestOptions): Promise<Ledger> {
-    return this.http.request<Ledger>("GET", `/v1/customer/ledgers/${ledgerID}`, undefined, opts);
+    return this.http.request<Ledger>(
+      "GET",
+      `/v1/customer/ledgers/${ledgerID}`,
+      undefined,
+      opts,
+    );
   }
 
   /**
    * List ledgers with optional filters.
    * GET /v1/customer/ledgers
    */
-  async list(params?: ListLedgersParams, opts?: RequestOptions): Promise<Ledger[]> {
-    return this.http.request<Ledger[]>("GET", "/v1/customer/ledgers", undefined, {
-      ...opts,
-      query: buildPaginationQuery(params as Record<string, unknown>),
-    });
+  async list(
+    params?: ListLedgersParams,
+    opts?: RequestOptions,
+  ): Promise<Ledger[]> {
+    return this.http.request<Ledger[]>(
+      "GET",
+      "/v1/customer/ledgers",
+      undefined,
+      {
+        ...opts,
+        query: buildPaginationQuery(params as Record<string, unknown>),
+      },
+    );
   }
 
   /**
@@ -124,7 +145,8 @@ export class LedgersService {
       throw RailsrError.notFound("No ledger found for that UK account");
     }
     const first = results[0];
-    if (!first) throw RailsrError.notFound("No ledger found for that UK account");
+    if (!first)
+      throw RailsrError.notFound("No ledger found for that UK account");
     return first;
   }
 
@@ -161,7 +183,10 @@ export class LedgersService {
       "GET",
       `/v1/customer/ledgers/${ledgerID}/entries`,
       undefined,
-      { ...opts, query: buildPaginationQuery(params as Record<string, unknown>) },
+      {
+        ...opts,
+        query: buildPaginationQuery(params as Record<string, unknown>),
+      },
     );
   }
 
@@ -171,7 +196,10 @@ export class LedgersService {
    * Credit a virtual ledger.
    * POST /v1/customer/transactions/credit-virtual-ledger
    */
-  async creditVirtual(params: VirtualCreditParams, opts?: RequestOptions): Promise<void> {
+  async creditVirtual(
+    params: VirtualCreditParams,
+    opts?: RequestOptions,
+  ): Promise<void> {
     await this.http.request<void>(
       "POST",
       "/v1/customer/transactions/credit-virtual-ledger",
@@ -184,7 +212,10 @@ export class LedgersService {
    * Debit a virtual ledger.
    * POST /v1/customer/transactions/debit-virtual-ledger
    */
-  async debitVirtual(params: VirtualDebitParams, opts?: RequestOptions): Promise<void> {
+  async debitVirtual(
+    params: VirtualDebitParams,
+    opts?: RequestOptions,
+  ): Promise<void> {
     await this.http.request<void>(
       "POST",
       "/v1/customer/transactions/debit-virtual-ledger",

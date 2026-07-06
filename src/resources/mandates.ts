@@ -56,7 +56,10 @@ export class MandatesService {
    * Create a new BACS Direct Debit mandate.
    * POST /v1/customer/payment/mandates
    */
-  async create(params: CreateMandateParams, opts?: RequestOptions): Promise<Mandate> {
+  async create(
+    params: CreateMandateParams,
+    opts?: RequestOptions,
+  ): Promise<Mandate> {
     return this.http.request<Mandate>(
       "POST",
       "/v1/customer/payment/mandates",
@@ -82,12 +85,18 @@ export class MandatesService {
    * List mandates with optional filters.
    * GET /v1/customer/payment/mandates
    */
-  async list(params?: ListMandatesParams, opts?: RequestOptions): Promise<Mandate[]> {
+  async list(
+    params?: ListMandatesParams,
+    opts?: RequestOptions,
+  ): Promise<Mandate[]> {
     return this.http.request<Mandate[]>(
       "GET",
       "/v1/customer/payment/mandates",
       undefined,
-      { ...opts, query: buildPaginationQuery(params as Record<string, unknown>) },
+      {
+        ...opts,
+        query: buildPaginationQuery(params as Record<string, unknown>),
+      },
     );
   }
 
@@ -142,8 +151,16 @@ export class PaymentsService {
    * Initiate a Direct Debit collection using an active mandate.
    * POST /v1/customer/payment
    */
-  async create(params: CreatePaymentParams, opts?: RequestOptions): Promise<Payment> {
-    return this.http.request<Payment>("POST", "/v1/customer/payment", params, opts);
+  async create(
+    params: CreatePaymentParams,
+    opts?: RequestOptions,
+  ): Promise<Payment> {
+    return this.http.request<Payment>(
+      "POST",
+      "/v1/customer/payment",
+      params,
+      opts,
+    );
   }
 
   /**
@@ -163,10 +180,18 @@ export class PaymentsService {
    * List payments, optionally filtered by mandate.
    * GET /v1/customer/payment
    */
-  async list(params?: ListPaymentsParams, opts?: RequestOptions): Promise<Payment[]> {
-    return this.http.request<Payment[]>("GET", "/v1/customer/payment", undefined, {
-      ...opts,
-      query: buildPaginationQuery(params as Record<string, unknown>),
-    });
+  async list(
+    params?: ListPaymentsParams,
+    opts?: RequestOptions,
+  ): Promise<Payment[]> {
+    return this.http.request<Payment[]>(
+      "GET",
+      "/v1/customer/payment",
+      undefined,
+      {
+        ...opts,
+        query: buildPaginationQuery(params as Record<string, unknown>),
+      },
+    );
   }
 }

@@ -73,8 +73,12 @@ export interface Company {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export type EnduserType = OpenEnum<"person" | "company">;
-export type EnduserStatus = OpenEnum<"pending" | "active" | "suspended" | "closed">;
-export type KYCStatus = OpenEnum<"not_started" | "pending" | "passed" | "failed" | "referred">;
+export type EnduserStatus = OpenEnum<
+  "pending" | "active" | "suspended" | "closed"
+>;
+export type KYCStatus = OpenEnum<
+  "not_started" | "pending" | "passed" | "failed" | "referred"
+>;
 
 export interface Enduser {
   readonly enduser_id: string;
@@ -103,7 +107,9 @@ export interface KYCCheck {
 // Ledger
 // ─────────────────────────────────────────────────────────────────────────────
 
-export type LedgerStatus = OpenEnum<"pending" | "active" | "suspended" | "closed">;
+export type LedgerStatus = OpenEnum<
+  "pending" | "active" | "suspended" | "closed"
+>;
 export type HolderType = OpenEnum<"enduser" | "customer">;
 export type AssetClass = OpenEnum<"currency" | "crypto">;
 
@@ -147,8 +153,12 @@ export interface LedgerEntry {
 // Beneficiary
 // ─────────────────────────────────────────────────────────────────────────────
 
-export type BeneficiaryStatus = OpenEnum<"pending" | "active" | "quarantined" | "suspended">;
-export type COPResult = OpenEnum<"matched" | "close_match" | "not_matched" | "cannot_match">;
+export type BeneficiaryStatus = OpenEnum<
+  "pending" | "active" | "quarantined" | "suspended"
+>;
+export type COPResult = OpenEnum<
+  "matched" | "close_match" | "not_matched" | "cannot_match"
+>;
 
 export interface Beneficiary {
   readonly beneficiary_id: string;
@@ -185,7 +195,9 @@ export type TransactionType = OpenEnum<
   | "card-transaction"
   | "direct-debit"
 >;
-export type PaymentType = OpenEnum<"faster-payment" | "bacs" | "sepa" | "swift">;
+export type PaymentType = OpenEnum<
+  "faster-payment" | "bacs" | "sepa" | "swift"
+>;
 
 export interface Transaction {
   readonly transaction_id: string;
@@ -217,11 +229,19 @@ export interface Transaction {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export type CardType = OpenEnum<"virtual" | "physical">;
-export type CardStatus = OpenEnum<"pending" | "active" | "frozen" | "suspended" | "cancelled">;
+export type CardStatus = OpenEnum<
+  "pending" | "active" | "frozen" | "suspended" | "cancelled"
+>;
 export type CardScheme = OpenEnum<"visa" | "mastercard">;
-export type CardRuleType = OpenEnum<"amount_limit" | "mcc_block" | "country_block" | "mcc_allow">;
-export type CardLimitInterval = OpenEnum<"transaction" | "daily" | "weekly" | "monthly">;
-export type ReplacementReason = OpenEnum<"lost" | "stolen" | "damaged" | "expired">;
+export type CardRuleType = OpenEnum<
+  "amount_limit" | "mcc_block" | "country_block" | "mcc_allow"
+>;
+export type CardLimitInterval = OpenEnum<
+  "transaction" | "daily" | "weekly" | "monthly"
+>;
+export type ReplacementReason = OpenEnum<
+  "lost" | "stolen" | "damaged" | "expired"
+>;
 export type WalletProvider = OpenEnum<"apple_pay" | "google_pay">;
 
 export interface CardRule {
@@ -276,7 +296,9 @@ export type PaymentTokenResponse = Record<string, unknown>;
 // Direct Debit
 // ─────────────────────────────────────────────────────────────────────────────
 
-export type MandateStatus = OpenEnum<"pending" | "active" | "cancelled" | "failed">;
+export type MandateStatus = OpenEnum<
+  "pending" | "active" | "cancelled" | "failed"
+>;
 
 export interface Mandate {
   readonly mandate_id: string;
@@ -293,7 +315,9 @@ export interface Mandate {
   readonly cancelled_at?: string;
 }
 
-export type PaymentStatus = OpenEnum<"pending" | "collected" | "failed" | "cancelled">;
+export type PaymentStatus = OpenEnum<
+  "pending" | "collected" | "failed" | "cancelled"
+>;
 
 export interface Payment {
   readonly payment_id: string;
@@ -340,7 +364,9 @@ export interface FirewallDataset {
 // Webhook / Notifications
 // ─────────────────────────────────────────────────────────────────────────────
 
-export type WebhookDeliveryStatus = OpenEnum<"delivered" | "failed" | "pending">;
+export type WebhookDeliveryStatus = OpenEnum<
+  "delivered" | "failed" | "pending"
+>;
 
 export interface WebhookConfig {
   readonly url: string;

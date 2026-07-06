@@ -28,6 +28,7 @@
     "lint:fix": "eslint \"src/**/*.ts\" --ext .ts --fix",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.ts\"",
+     "clean": "rimraf dist",
     "format:check": "prettier --check \"src/**/*.ts\"",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json",
     "prepublishOnly": "npm run clean && npm run build && npm run typecheck"
@@ -55,6 +56,7 @@
     "nock": "^13.5.4",
     "ts-jest": "^29.4.11",
     "ts-node": "^10.9.2",
+    "rimraf": "^6.1.3",
     "typescript": "^5.9.3"
   },
   "engines": {
